@@ -6,22 +6,39 @@ public class BankAccount {
     double transactionFee;
 
     void deposit(double amount) {
-        // TODO: modify method body
-        balance = balance + amount;
-    }
 
+        if (amount >= 0) {
+            balance = balance + amount;
+        } else  {
+            System.out.println("Помилка. Поповнення неможливе.");
+        }
+    }
     double getBalance() {
+
         return this.balance;
+
     }
 
     boolean withdraw(double amount) {
-        // TODO: modify method body
-        balance = balance - amount;
-        return true;
+        if (amount <= 0) {
+            return false;
+        }
+
+            if (balance >= amount + transactionFee) {
+            balance = balance - (amount + transactionFee);
+            return true;
+        }else  {
+            System.out.println("Недостатньо коштів");
+            return false;
+        }
+
     }
 
     boolean transfer(BankAccount receiver, double amount) {
-        // TODO: modify method body
+        if (this.withdraw(amount)) {
+            receiver.deposit(amount);
+            return true;
+        }
         return false;
     }
 }
